@@ -1,0 +1,45 @@
+#+Title: Annotated Bibliography for Project 2156
+#+LaTeX_CLASS:article
+#+LaTeX_CLASS_OPTIONS:[11pt,letterpaper]
+
+:PREAMBLE:
+#+LATEX_HEADER: \usepackage[letterpaper, total={7in, 9in}]{geometry}
+#+LATEX_HEADER: \usepackage[english]{babel}
+#+LATEX_HEADER: \usepackage{booktabs}
+
+#+LATEX_HEADER: \usepackage{listings}
+# Style the listings package
+#+LATEX_HEADER: \lstset{
+#+LATEX_HEADER:   basicstyle=\ttfamily\small,
+#+LATEX_HEADER:   frame=single,
+#+LATEX_HEADER:   breaklines=true,
+#+LATEX_HEADER:   numbers=left,
+#+LATEX_HEADER:   numberstyle=\tiny,
+#+LATEX_HEADER:   captionpos=b
+#+LATEX_HEADER: }
+#+LATEX_HEADER: \usepackage{xcolor}
+#+LATEX_HEADER: \lstset{
+#+LATEX_HEADER:   language=Python,
+#+LATEX_HEADER:   keywordstyle=\color{blue},
+#+LATEX_HEADER:   commentstyle=\color{green!60!black},
+#+LATEX_HEADER:   stringstyle=\color{red}
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \usepackage{natbib}
+#+LATEX_HEADER: \usepackage{bibentry}
+#+LATEX_HEADER: \nobibliography*
+:END:
+
+\tableofcontents
+
+\section{Introduction}
+
+#
+#+LATEX: \subsubsection*{\bibentry{Coppens1968ErrorsInElectronDensityMapsAndTheUseOfIntegratedDensitiesInTheStudyOfChargeDensityDistributions}}
+#+LATEX: \addcontentsline{toc}{subsubsection}{Coppens1968ErrorsInElectronDensityMapsAndTheUseOfIntegratedDensitiesInTheStudyOfChargeDensityDistributions}
+#+INCLUDE: /Users/blaine/abibNotes/Coppens1968ErrorsInElectronDensityMapsAndTheUseOfIntegratedDensitiesInTheStudyOfChargeDensityDistributions.org
+
+#+LATEX:\clearpage
+
+\bibliographystyle{cell}
+\bibliography{/Users/blaine/Documents/global.bib}

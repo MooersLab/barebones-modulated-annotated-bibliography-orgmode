@@ -1,0 +1,31 @@
+This looks like an interesting paper.
+
+#+CAPTION: This is the table caption.
+#+ATTR_LATEX: :booktabs t
+|--------+-----------+-----------+------------+------------+------------|
+| Sample | Variable1 | Variable2 | Variable 3 | Variable 4 | Variable 5 |
+|--------+-----------+-----------+------------+------------+------------|
+|      1 | q         | u         | o          | p          | y          |
+|      2 | q         | u         | o          | p          | y          |
+|      3 | q         | u         | o          | p          | y          |
+|      4 | q         | u         | o          | p          | y          |
+|--------+-----------+-----------+------------+------------+------------|
+
+
+#+CAPTION: This is the figure caption.
+#+NAME: fig:2173d-1-wilsonplotpy
+#+ATTR_LATEX: :scale 0.5
+[[file:/Users/blaine/abibNotes/images/3173d_1-WilsonPlot.png]]
+
+
+#+BEGIN_EXPORT latex
+\lstset{language=Python}
+\begin{lstlisting}[caption={Wilson plot in Python2 for the SMB server.},label={lst:wilsonplot2}]
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+import sys
+import os
+import numpy as np
+import matplotlib as mpl
+\end{lstlisting}
+#+END_EXPORT
