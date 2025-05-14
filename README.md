@@ -4,14 +4,16 @@
 
 #  A bare-bones modular annotated bibliography for org-mode
 
+## Problem addressed
 This repo is for a bare-bones modular annotated bibliography template that uses a small LaTeX preamble.
 The idea is to reduce LaTeX package conflicts between the preamble and what is pre-configured in org-mode.
 
+## Modularity
 The modularity comes from storing the annotation inside an external file that is important to the main document.
 The standard approaches for storing the annotation in the BibTeX file.
 Including tables, equations, figures, and code listings in the BibTeX file is more challenging.
 
-
+## File organization
 The annotated bibliography resides in a subfolder in a writing project.
 The subfolder has the address ./ab----, where ---- is a four-digit project number.
 The project number is stored in a database.
@@ -20,26 +22,33 @@ The number is used to label folders and files, categorize projects, and navigate
 
 The annotated bibliography notes are stored in individual files in the communal folder in the home directory.
 This enables the reuse of an annotated bibliography entry in more than one annotated bibliography.
-The communal folder has the name ~/abibNotes.
+The communal folder has the name `~/abibNotes`.
 Image files that are called by these notes are stored in ~/abibNotes/images.
 
+## The note files
 The note files start as empty files with the cite key as the base of the file name and 'org' as a file extension.
 This file extension is all that Emacs needs to recognize this file as an Org-mode file.
 The note file can contain subheadings written in org-mode.
 Using the `#+LATEX: \paragraph` environment is simpler to avoid jumping between org-mode and \LaTeX.
 
-The note file can contain org-mode tables formatted following the booktabs package, which supports the use of three kinds of rules: toprule, midrule, and bottomrule.
-The note file can also contain images and code listings that have syntax highlighting.
+The note file can contain org-mode tables formatted following the booktabs package, which supports using three kinds of rules: toprule, midrule, and bottomrule.
+The note file can also contain images and code listings with syntax highlighting.
+An example note file is provided.
 
 This template is agnostic about which Emacs bibliographic entry manager you are using.
 However, it does depend on the use of a global.bib file.
 
-This function ml/wrap-citar-citekey-and-create-abibnote-org assumes that you are utilizing the citar Emacs package for managing the bibliography.
-The function is found in MooersLab/mooerslab-functions-el.
-You first insert a citekey.
-Then you place the cursor inside the citekey.
-You execute the above function in the mini buffer, and the cite key will be replaced with the bibliographic information injected into a \subsubsection{} heading.
-At the same time, a new buffer will open with the new note file so that you can edit it.
+## Automated note entry
+This Elisp function `ml/wrap-citar-citekey-and-create-abibnote-org` eases adding entries to the main file and supports your focus on writing the entry.
+The function assumes you utilize the *citar* Emacs package to manage the bibliography.
+The function is found in `MooersLab/mooerslab-functions-el`.
+
+-  insert a citekey ab----.org
+-  place cursor in citekey
+-  M-x ml/wrap-citar-citekey-and-create-abibnote-org
+
+The cite key will be replaced with the bibliographic information injected into a \subsubsection{} heading.
+At the same time, a new buffer will open with the new note file so you can edit it.
 This file will have been created in the abibNotes folder in your home directory.
 The corresponding did tech entry is supposed to be appended to the file ab----.bib so that you can have a local copy of BibTeX entries to ease sharing the annotated bibliography.
 
