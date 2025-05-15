@@ -6,8 +6,9 @@
 #+LATEX_HEADER: \usepackage[letterpaper, total={7in, 9in}]{geometry}
 #+LATEX_HEADER: \usepackage[english]{babel}
 #+LATEX_HEADER: \usepackage{booktabs}
-
+#+LATEX_HEADER: \usepackage{gensymb,amsmath,amssymb}
 #+LATEX_HEADER: \usepackage{listings}
+
 # Style the listings package
 #+LATEX_HEADER: \lstset{
 #+LATEX_HEADER:   basicstyle=\ttfamily\small,
