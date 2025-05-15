@@ -8,6 +8,13 @@
 This repo is for a bare-bones modular annotated bibliography template with a small LaTeX preamble.
 The idea is to reduce LaTeX package conflicts between the preamble and what is pre-configured in org-mode.
 
+## Features
+
+1. Modular design allows the reuse of the annotations.
+2. Support for illustrating with tables, figures, code listings, and equations.
+3. The entries can be categorized rather than being listed alphabetically.
+
+
 ## Modularity
 The modularity comes from storing the annotation inside an external file that is important to the main document.
 The standard approaches for storing the annotation in the BibTeX file.
