@@ -15,7 +15,7 @@ Including tables, equations, figures, and code listings in the BibTeX file is mo
 
 ## File organization
 The annotated bibliography resides in a subfolder in a writing project.
-The subfolder has the address ./ab----, where ---- is a four-digit project number.
+The subfolder has the address `./ab----`, where `----` is a four-digit project number.
 The project number is stored in a database.
 The number is used to label folders and files, categorize projects, and navigate between projects.
 'ab' stands for annotated bibliography.
@@ -23,7 +23,7 @@ The number is used to label folders and files, categorize projects, and navigate
 The annotated bibliography notes are stored in individual files in the communal folder in the home directory.
 This enables the reuse of an annotated bibliography entry in more than one annotated bibliography.
 The communal folder has the name `~/abibNotes`.
-Image files that are called by these notes are stored in ~/abibNotes/images.
+Image files that are called by these notes are stored in `~/abibNotes/images`.
 
 ## The note files
 The note files start as empty files with the cite key as the base of the file name and 'org' as a file extension.
@@ -51,7 +51,7 @@ Three simple steps are required as listed below:
 2.  Place the cursor inside the square brackets of the citekey.
 3.  Enter in the minibuffer: M-x ml/wrap-citar-citekey-and-create-abibnote-org
 
-The cite key will be replaced with the bibliographic information injected into a \subsubsection{} heading.
+The cite key will be replaced with the bibliographic information injected into a `\subsubsection{}` heading.
 At the same time, a new buffer will open with the new note file so you can edit it.
 The new note file already has the citekey for its filename, and it is already in the final destination folder: the abibNotes folder in your home directory.
 The corresponding BibTeX entry is supposed to be appended to the file `ab----.bib` so that you can have a local copy of BibTeX entries to ease sharing the annotated bibliography.
