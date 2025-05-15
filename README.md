@@ -5,7 +5,7 @@
 #  A bare-bones modular annotated bibliography for org-mode
 
 ## Problem addressed
-This repo is for a bare-bones modular annotated bibliography template that uses a small LaTeX preamble.
+This repo is for a bare-bones modular annotated bibliography template with a small LaTeX preamble.
 The idea is to reduce LaTeX package conflicts between the preamble and what is pre-configured in org-mode.
 
 ## Modularity
@@ -39,25 +39,29 @@ This template is agnostic about which Emacs bibliographic entry manager you are 
 However, it does depend on the use of a global.bib file.
 
 ## Automated note entry
-This Elisp function `ml/wrap-citar-citekey-and-create-abibnote-org` eases adding entries to the main file and supports your focus on writing the entry.
+The Elisp function `ml/wrap-citar-citekey-and-create-abibnote-org` eases adding entries to the master annotated bibliography file and supports keeping your focus on writing the entry.
 The function assumes you utilize the *citar* Emacs package to manage the bibliography.
-The function is found in `MooersLab/mooerslab-functions-el`.
+You could adapt it to org-ref or the built-in org-cite packages.
+I leave that as an exercise for the user.
 
--  insert a citekey ab----.org
--  place cursor in citekey
--  M-x ml/wrap-citar-citekey-and-create-abibnote-org
+The function is found in `MooersLab/mooerslab-functions-el`.
+Three simple steps are required as listed below:
+
+1.  Insert a citekey at the cursor in the ab----.org document, the master annotated bibliography file.
+2.  Place the cursor inside the square brackets of the citekey.
+3.  Enter in the minibuffer: M-x ml/wrap-citar-citekey-and-create-abibnote-org
 
 The cite key will be replaced with the bibliographic information injected into a \subsubsection{} heading.
 At the same time, a new buffer will open with the new note file so you can edit it.
-This file will have been created in the abibNotes folder in your home directory.
-The corresponding did tech entry is supposed to be appended to the file ab----.bib so that you can have a local copy of BibTeX entries to ease sharing the annotated bibliography.
-
+The new note file already has the citekey for its filename, and it is already in the final destination folder: the abibNotes folder in your home directory.
+The corresponding BibTeX entry is supposed to be appended to the file `ab----.bib` so that you can have a local copy of BibTeX entries to ease sharing the annotated bibliography.
+It may show up in a `sers.bib` file.
 
 ## Update history
 
-|Version      | Changes                                                                                                                                                                         | Date                 |
+|Version      | Changes                                                                                                                                 | Date                 |
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------|:--------------------|
-| Version 0.1 |   Added badges, funding, and update table.  Initial commit.                                                                                                                | 5/14/2025  |
+| Version 0.1 |   Added badges, funding, and update table.  Initial commit.                                                                              | 5/14/2025           |
 
 ## Sources of funding
 
