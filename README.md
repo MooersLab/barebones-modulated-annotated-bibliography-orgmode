@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 
-#  A bare-bones modular annotated bibliography for org-mode
+#  A bare-bones, modular, and illustrated annotated bibliography written in org-mode
 
 ## Problem addressed
 This repo is for a bare-bones modular annotated bibliography template with a small LaTeX preamble.
