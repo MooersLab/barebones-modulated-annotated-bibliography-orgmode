@@ -38,7 +38,7 @@ An example note file is provided.
 This template is agnostic about which Emacs bibliographic entry manager you are using.
 However, it does depend on the use of a global.bib file.
 
-## Automated note entry
+## Semi-automated note entry
 The Elisp function `ml/wrap-citar-citekey-and-create-abibnote-org` eases adding entries to the master annotated bibliography file and supports keeping your focus on writing the entry.
 The function assumes you utilize the *citar* Emacs package to manage the bibliography.
 You could adapt it to org-ref or the built-in org-cite packages.
@@ -51,11 +51,16 @@ Three simple steps are required as listed below:
 2.  Place the cursor inside the square brackets of the citekey.
 3.  Enter in the minibuffer: M-x ml/wrap-citar-citekey-and-create-abibnote-org
 
+With the corrected configuration, the last used function will be at the top of the list in the minibuffer, so rerunning the command goes quickly.
 The cite key will be replaced with the bibliographic information injected into a `\subsubsection{}` heading.
 At the same time, a new buffer will open with the new note file so you can edit it.
 The new note file already has the citekey for its filename, and it is already in the final destination folder: the abibNotes folder in your home directory.
 The corresponding BibTeX entry is supposed to be appended to the file `ab----.bib` so that you can have a local copy of BibTeX entries to ease sharing the annotated bibliography.
 It may show up in a `sers.bib` file.
+
+## Bulk processing (to be done)
+
+A list of list citekeys extracted from a manuscript can be converted in bulk into subsubsections in the main document with the parallel creation of the Abibnotes.
 
 ## Update history
 
