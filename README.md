@@ -69,6 +69,159 @@ It may show up in a `sers.bib` file.
 
 A list of list citekeys extracted from a manuscript can be converted in bulk into subsubsections in the main document with the parallel creation of the Abibnotes.
 
+
+## Convenience function to wrap the insertion citekey
+
+The description of the function below effectively explains how it works.
+This function is also stored in the repository `MooersLab/mooerslab-functions-el`.
+This latter repository contains the file `mooerslab.el`.
+This file is an Emacs Lisp package.
+It will contain the latest version of the function below.
+It is unlikely that I will remember to update this webpage every time I make updates to that function.
+
+```elisp
+(defun mooerslab-wrap-citar-citekey-and-create-abibnote-org ()
+    "Replace the citekey under the cursor with LaTeX-wrapped text and create a 
+    corresponding empty citekey.org file in abibNotes folder in the home directory.
+    Will work with citekeys in citar style or in LaTeX style or plain naked citekeys.
+    The LaTeX code uses the bibentry package to inject a bibliographic entry into 
+    a section heading that is added in the table of contents. The function also adds
+    file links to the PDF and org note files in a comment block for quick access."
+
+    (interactive)
+    (let* ((bounds (or (save-excursion
+                      ;; Check if we're inside a citation
+                      (let ((start (re-search-backward "\\[cite:@" (line-beginning-position) t))
+                            (end (re-search-forward "\\]" (line-end-position) t)))
+                        (when (and start end)
+                          (cons start end))))
+                    ;; Otherwise just get the word at point
+                    (bounds-of-thing-at-point 'word)))
+         (citation-text (when bounds 
+                          (buffer-substring-no-properties (car bounds) (cdr bounds))))
+         (citekey (when citation-text
+                    (if (string-match "\\[cite:@\\([^]]+\\)\\]" citation-text)
+                        (match-string 1 citation-text)
+                      citation-text))) ;; Plain word if not a citation
+  
+         ;; Extract directory from current buffer filename
+         (current-file (buffer-file-name))
+         (current-dir (when current-file (file-name-directory current-file)))
+  
+         ;; Try to determine default project number from filename
+         (default-project-number 
+          (cond 
+           ;; First try to find "ab2156" pattern in the buffer file name
+           ((and current-file 
+                 (string-match "ab\\([0-9]+\\).org" (file-name-nondirectory current-file)))
+            (match-string 1 current-file))
+     
+           ;; Look for "2156" in the buffer file name
+           ((and current-file 
+                 (string-match "\\([0-9]+\\)" (file-name-nondirectory current-file)))
+            (match-string 1 current-file))
+     
+           ;; Default to empty string
+           (t "")))
+  
+         ;; Prompt the user for project number with default from filename
+         (project-number (read-string (format "Project number for BibTeX file [%s]: " 
+                                             default-project-number)
+                                     nil nil default-project-number))
+  
+         ;; Construct file paths
+         (bib-file-name (concat "ab" project-number ".bib"))
+         (bib-file-path (and current-dir (concat current-dir bib-file-name)))
+         (org-file-dir "/Users/blaine/abibNotes/") ;; Directory for the .org file
+         (org-file-path (and citekey (concat org-file-dir citekey ".org"))) ;; Full path for the .org file
+         
+         ;; Updated wrapped text with file links inside a comment block
+         (wrapped-text (and citekey 
+                           (format "#+LATEX: \\subsubsection*{\\bibentry{%s}}\n#+LATEX: \\addcontentsline{toc}{subsubsection}{%s}\n#+INCLUDE: %s\n#+BEGIN_COMMENT\nfile:~/abibNotes/%s.org\nfile:~/0papersLabeled/%s.pdf\n#+END_COMMENT"
+                                  citekey citekey org-file-path citekey citekey))))
+
+    ;; Debug message to check file paths
+    (message "Using bibfile: %s" bib-file-path)
+
+    (if (not citekey)
+        (message "No citekey found under the cursor.")
+      (progn
+        ;; Delete the citation or word at cursor
+        (when bounds
+          (delete-region (car bounds) (cdr bounds)))
+        ;; Insert the wrapped text in its place
+        (insert wrapped-text)
+ 
+        ;; Create a minimal .org file if it doesn't already exist - no header, no headline
+        (if (file-exists-p org-file-path)
+            (message "File %s already exists." org-file-path)
+          (with-temp-file org-file-path
+            (insert ""))) ;; Empty file
+ 
+        ;; Append the BibTeX entry to the project-specific .bib file in current directory
+        (require 'bibtex)
+        (when (and (featurep 'citar) current-dir bib-file-path)  ;; Ensure we have all required paths
+          ;; Get the bibtex entry using search in citar bibliography files
+          (let* ((bib-files (citar--bibliography-files))
+                 (bibtex-entry nil))
+     
+            ;; Look through each bibliography file for the entry
+            (when bib-files
+              (catch 'found
+                (dolist (bib-file bib-files)
+                  (with-temp-buffer
+                    (insert-file-contents bib-file)
+                    (bibtex-mode)
+                    (bibtex-set-dialect 'BibTeX t)
+                    (goto-char (point-min))
+                    (when (re-search-forward (format "@[^{]+{%s," citekey) nil t)
+                      (let ((beg (save-excursion 
+                                   (bibtex-beginning-of-entry)
+                                   (point)))
+                            (end (save-excursion
+                                   (bibtex-end-of-entry)
+                                   (point))))
+                        (setq bibtex-entry (buffer-substring-no-properties beg end))
+                        (throw 'found t)))))))
+     
+            (if bibtex-entry
+                (progn
+                  ;; Now append to the bib file
+                  (with-temp-file bib-file-path
+                    (when (file-exists-p bib-file-path)
+                      (insert-file-contents bib-file-path))
+                    (goto-char (point-max))
+                    (unless (or (bobp) (bolp)) (insert "\n"))
+                    (insert bibtex-entry "\n\n"))
+                  (message "Added BibTeX entry to %s" bib-file-path))
+              (message "Could not retrieve BibTeX entry for %s" citekey))))
+ 
+        ;; Open the .org file in a new buffer
+        (find-file org-file-path)
+        (message "Replaced citekey, created .org file, and opened it: %s" org-file-path)))))
+```
+
+This function replaces the citekey (e.g., [cite@Schaefer2021SEQCROW]) with the following:
+
+```elisp
+#+LATEX: \subsection*{\bibentry{Schaefer2021SEQCROW}}
+#+LATEX: \addcontentsline{toc}{subsubsection}{Schaefer2021SEQCROW}
+#+INCLUDE: /Users/blaine/abibNotes/Schaefer2021SEQCROW.org
+#+BEGIN_COMMENT
+file:~/abibNotes/Schaefer2021SEQCROW.org
+file:~/0papersLabeled/Schaefer2021SEQCROW.pdf
+#+END_COMMENT
+```
+
+The links allow direct access to the annotated bibliography note file after you have initially created it and closed it.
+This eases the process of making further edits to the annotated bibliography note file.
+The link to the PDF also makes it easier to open, as you don't have to spend time searching for it.
+These two links greatly facilitate making additions and further edits to the note files.
+
+The links in the org-mode comment are not exported to the PDF.
+If the links are not included in the comment, the first page of the PDF in the source files will be displayed within the exported PDF file of the annotated bibliography.
+Some might find that to be advantageous.
+
 ## Update history
 
 |Version      | Changes                                                                                                                                 | Date                 |
