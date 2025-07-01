@@ -28,8 +28,8 @@ The number is used to label folders and files, categorize projects, and navigate
 'ab' stands for annotated bibliography.
 
 The annotated bibliography notes are stored in individual files in the communal folder in the home directory.
-This enables the reuse of an annotated bibliography entry in more than one annotated bibliography.
-The communal folder has the name `~/abibNotes`.
+This enables the reuse of an annotated bibliography entry in multiple annotated bibliographies.
+The communal folder is named `~/abibNotes`.
 Image files that are called by these notes are stored in `~/abibNotes/images`.
 
 ## The note files
@@ -38,7 +38,7 @@ This file extension is all that Emacs needs to recognize this file as an Org-mod
 The note file can contain subheadings written in org-mode.
 Using the `#+LATEX: \paragraph` environment is simpler to avoid jumping between org-mode and \LaTeX.
 
-The note file can contain org-mode tables formatted following the booktabs package, which supports using three kinds of rules: toprule, midrule, and bottomrule.
+The note file can contain org-mode tables formatted according to the booktabs package, which supports using three types of rules: toprule, midrule, and bottomrule.
 The note file can also contain images and code listings with syntax highlighting.
 An example note file is provided.
 
@@ -46,21 +46,21 @@ This template is agnostic about which Emacs bibliographic entry manager you are 
 However, it does depend on the use of a global.bib file.
 
 ## Semi-automated note entry
-The Elisp function `ml/wrap-citar-citekey-and-create-abibnote-org` eases adding entries to the master annotated bibliography file and supports keeping your focus on writing the entry.
+The Emacs Lisp function `mooeralab-wrap-citar-citekey-and-create-abibnote-org` eases adding entries to the master annotated bibliography file and supports keeping your focus on writing the entry.
 The function assumes you utilize the *citar* Emacs package to manage the bibliography.
 You could adapt it to org-ref or the built-in org-cite packages.
-I leave that as an exercise for the user.
+I will build those variants someday.
 
-The function is found in `MooersLab/mooerslab-functions-el`.
+The function is found in the `MooersLab/mooerslab-functions-el` repo.
 Three simple steps are required as listed below:
 
 1.  Insert a citekey at the cursor in the ab----.org document, the master annotated bibliography file.
 2.  Place the cursor inside the square brackets of the citekey.
-3.  Enter in the minibuffer: M-x ml/wrap-citar-citekey-and-create-abibnote-org
+3.  Enter in the minibuffer: M-x mooerslab-wrap-citar-citekey-and-create-abibnote-org
 
-With the corrected configuration, the last used function will be at the top of the list in the minibuffer, so rerunning the command goes quickly.
+With the corrected configuration, the last used function will be at the top of the list in the minibuffer, allowing rerunning the command to proceed quickly.
 The cite key will be replaced with the bibliographic information injected into a `\subsubsection{}` heading.
-At the same time, a new buffer will open with the new note file so you can edit it.
+At the same time, a new buffer will open with the new note file, allowing you to edit it.
 The new note file already has the citekey for its filename, and it is already in the final destination folder: the abibNotes folder in your home directory.
 The corresponding BibTeX entry is supposed to be appended to the file `ab----.bib` so that you can have a local copy of BibTeX entries to ease sharing the annotated bibliography.
 It may show up in a `sers.bib` file.
